@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_todo.css">
+
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="Header">
+
+        </div>
+
+        <div class="content">
+            <button name="scrollBack" id="scrollBack" title="scrollBack">Back</button>
+            <table border="1">
+
+                <thead id="tableHead">
+                    <caption>Meine Todos</caption>
+                    <tr>
+                        <th scope="col">Vorgestern</th>
+                        <th scope="col">Gestern</th>
+                        <th scope="col">Heute</th>
+                        <th scope="col">Morgen</th>
+                        <th scope="col">Übermorgen</th>
+                        <th scope="col">Über-Übermorgen</th>
+                        <th scope="col">Über-Über-Übermorgen</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td scope="col">Vorgestefddffdrn</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button name="scrollForward" id="scrollForward" title="scrollForward">Forward</button>
+        </div>
+
+        <div class="add-item">
+            <input type="text" id="addTodoTextInput" placeholder="Add To Do">
+            <button name="add" id="addToDoButton" title="Add">Add</button>
+        </div>
+
+        <div>
+            <ul id="newTodosList">
+
+            </ul>
+        </div>
+    </div>
+
+
+    <script src="js/ToDo.js"></script>
+    <script src="js/matrixManager.js"></script>
+    <script src="js/detailAreaManager.js"></script>
+    <script src="js/startup.js"></script>
+
+
+
+    <table border="1">
+
+
+        <div class="todo">
+            <div class="todo-button-row">
+                <!-- https://fontawesome.com/v4.7.0/icons/ -->
+                <div class="todo-button-row-button">
+                    <i class="edit fa fa-edit" aria-hidden="true" job="edit"></i>
+                </div>
+                <div class="todo-button-row-button">
+                    <i class="prio fa fa-thermometer-full" aria-hidden="true" job="change_priority"></i>
+                </div>
+                <div class="todo-button-row-button">
+                    <i class="delete fa fa-trash-o" aria-hidden="true" job="delete"></i>
+                </div>
+                <div class="todo-button-row-button">
+                    <i class="done fa fa-check" aria-hidden="true" job="set_done"></i>
+                </div>
+                <div class="todo-button-row-button">
+                    <i class="undone fa fa-close" aria-hidden="true" job="set_undone"></i>
+                </div>
+            </div>
+
+
+            <p class="text lineThrough">Vorgestefddffdrn</p>
+        </div>
+
+</body>
+
+</html>

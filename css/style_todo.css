@@ -1,0 +1,92 @@
+
+.todo{
+  width: 380px;
+  height:200px;
+  min-height: 45px;
+  background-image: url('../img/bg2.jpg');
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  border-radius: 15px 15px 0 0;
+  position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 0;
+  margin: 0;
+}
+
+.todo i.edit{
+  position: absolute;
+  font-size: 20px;
+  padding-left:2px;
+  left:5px;
+  top:5px;
+}
+
+.todo i.prio{
+  position: absolute;
+  font-size: 20px;
+  padding-left:10px;
+  left:25px;
+  top:5px;
+}
+
+.todo i.delete{
+  position: absolute;
+  font-size: 20px;
+  padding-left:10px;
+  left:45px;
+  top:5px;
+}
+
+.todo i.done{
+  position: absolute;
+  font-size: 20px;
+  padding-left:10px;
+  left:65px;
+  top:5px;
+}
+
+.todo i.undone{
+  position: absolute;
+  font-size: 20px;
+  padding-left:10px;
+  left:85px;
+  top:5px;
+}
+
+.todo i.edit:hover{
+  color:#af2290;
+  cursor: pointer;
+}
+.todo i.prio:hover{
+  color:#6eb200;
+  cursor: pointer;
+}
+.todo i.delete:hover{
+  color:#af0000;
+  cursor: pointer;
+}
+.todo i.done:hover{
+  color:#6eb200;
+  cursor: pointer;
+}
+.todo i.undone:hover{
+  color:#af0000;
+  cursor: pointer;
+}
+
+.todo p.text{
+  position: absolute;
+  padding:0;
+  margin:0;
+  font-size: 20px;
+  left:5px;
+  top:35px;
+  background-color: #FFF;
+  max-width:285px;
+}
+
+
+.lineThrough{
+  text-decoration: line-through;
+  color : #ccc;
+}
