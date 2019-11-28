@@ -11,20 +11,26 @@ function scrollForward() {
 
 function getCells(row, type) {
     console.log(row);
-    return row.map(toDo => `<${type} 
-    
+
+    let output = "";
+    //debugger;
+    row.forEach(toDo => {
+        let a = toDo;
+        if (toDo) {
+            output += `<${type} id="${toDo.id}" ondrop="dropToDoOnMatrix(event)" ondragover="allowDropOnMatrixCell(event)" draggable="true" ondragstart="dragTodo(event)">${getTodoDiv(toDo)}</${type}>`;
+        } else {
+            console.error("Empty Slot in Todo-Matrix - not allowed");
+        }
+    });
+
+    return output;
+    /*return row.map(toDo => `<${type} 
+        
     id="${toDo.id}" ondrop="dropToDoOnMatrix(event)" ondragover="allowDropOnMatrixCell(event)" draggable="true" ondragstart="dragTodo(event)">
     
-    <p>
-    <button type="button" class="btn btn-primary btn-lg" id="add-btn">Edit</button> 
-    <button type="button" class="btn btn-primary btn-lg" id="add-btn">Priority</button> 
-    <button type="button" class="btn btn-primary btn-lg" id="add-btn">Remove</button> 
-    <button type="button" class="btn btn-primary btn-lg" id="add-btn">Set done</button>
-    <button type="button" class="btn btn-primary btn-lg" id="add-btn">Set undone</button>
-    </p>
-    ${toDo.title} <br>
-    
-    </${type}>`).join('');
+    ${getTodoDiv(todo)}
+        
+    </${type}>`).join('');*/
 }
 
 function createBody(data) {
