@@ -100,9 +100,10 @@ function dropToDoOnMatrix(ev) {
 function reloadNewTodos() {
     newTodosList.innerHTML = '';
     newTodos.map(todo => {
-        newTodosList.insertAdjacentHTML('afterbegin', '<li id="' + todo.id + '" draggable="true" ondragstart="dragTodo(event)">' + todo.title + '</li>')
+        newTodosList.insertAdjacentHTML('afterbegin', '<li id="' + todo.id + '" draggable="true" ondragstart="dragTodo(event)">' + getTodoDiv(todo) + '</li>')
     });
 }
+
 
 let addToDoButton = document.getElementById("addToDoButton");
 addToDoButton.addEventListener("click", addTodo);

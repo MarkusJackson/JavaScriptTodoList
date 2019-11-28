@@ -11,9 +11,6 @@ function resetMatrix() {
     localStorage.setItem("matrix", JSON.stringify(matrix));
 }
 
-function createEmptyTodo() {
-    return new ToDo(" --- ");
-}
 
 function resetNewTodos() {
     newTodos = [];
