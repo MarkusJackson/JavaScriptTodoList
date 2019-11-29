@@ -25,7 +25,7 @@ function getTodoDiv(todo) {
             '<p>leer</p>' +
             '</div>'
     } else {
-        return '<div id="' + todo.id + '" class="' + MATRIX_TODO_DIV_CLASS + '" draggable="true" ondragstart="dragTodo(event)">' +
+        return '<div id="' + todo.id + '" class="' + MATRIX_TODO_DIV_CLASS + '" draggable="true" ondragstart="dragTodoStart(event)">' +
             '   <div class="todo-button-row">' +
             '       <!-- https://fontawesome.com/v4.7.0/icons/ -->' +
             '       <div class="todo-button-row-button">' +

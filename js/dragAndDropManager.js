@@ -1,9 +1,16 @@
-function allowDropOnMatrixCell(dragEvent) {
-    // TODO Do not allow dropping on itself
-    const todoDivHtmlElementToDrop = dragEvent.path.find((item) => {
-        return item.className == MATRIX_COLUMN_DIV_CLASS || item.className == MATRIX_TODO_DIV_CLASS;
-    });
+let draggedTodo = null;
 
+function dragTodoStart(ev) {
+    draggedTodo = ev.srcElement;
+    setTimeout(function () {
+        draggedTodo.style.opacity = '0.5';
+    }, 0);
+    console.log("Dragging Todo with id: " + ev.target.id, ev);
+    ev.dataTransfer.setData("id", ev.target.id);
+}
+
+
+function allowDropOnMatrixCell(dragEvent) {
     let todoDivHtmlElementToDropOn = dragEvent.target;
     //debugger;
     while (true) {
@@ -14,46 +21,22 @@ function allowDropOnMatrixCell(dragEvent) {
             todoDivHtmlElementToDropOn = todoDivHtmlElementToDropOn.parentElement;
         }
     }
-    //debugger;
-    if (todoDivHtmlElementToDrop.id == todoDivHtmlElementToDropOn.id) {
-        console.log("Prevent: " + todoDivHtmlElementToDrop.id + " - " + todoDivHtmlElementToDropOn.id);
+    if (draggedTodo.id != todoDivHtmlElementToDropOn.id) {
         dragEvent.preventDefault();
-        return false;
-    } else {
-        console.log("No Prevent: " + todoDivHtmlElementToDrop.id + " - " + todoDivHtmlElementToDropOn.id);
-        return true;
     }
 }
 
-function dragTodo(ev) {
-    console.log("Dragging Todo with id: " + ev.target.id);
-    ev.dataTransfer.setData("id", ev.target.id);
-}
 
-function checkIdOfTodo(id) {
-    return
-}
 
-function getTodo(toDoId) {
-    // Search for Todo newTodos-List
-    let foundTodo;
-
-    //debugger;
-    // Suche in Matrix nach id
-    for (i = 0; i < matrix.length; i++) {
-        foundTodo = matrix[i].todos.find(function (todo) {
-            return todo.id == toDoId;
-        });
-        if (foundTodo) {
-            break;
-        }
-    }
-    return foundTodo;
-
-}
 
 function dropToDoOnMatrix(ev) {
     ev.preventDefault();
+
+    setTimeout(function () {
+        draggedTodo.style.opacity = '1';
+        draggedTodo = null;
+    }, 0);
+
     console.log(ev.dataTransfer);
     var dropData = ev.dataTransfer.getData("id");
     console.log(dropData);
@@ -88,25 +71,41 @@ function dropToDoOnMatrix(ev) {
         // Insert before target todo if parent is todo
         //debugger;
         let todoToDropOn = getTodo(correctParent.id);
-
         for (i = 0; i < matrix.length; i++) {
 
-            matrix[i].todos.forEach(toDo => {
+            matrix[i].todos.some(toDo => { // Some is the same as forEach, but it breaks, if we return true
 
                 if (toDo.id == todoToDropOn.id) {
                     indexToDropOn = matrix[i].todos.indexOf(toDo);
+                    console.log("splice");
                     matrix[i].todos.splice(indexToDropOn, 0, todoToDrop);
+                    return true; // We have to break, because if we drop on an Todo its index gets increased. We would drop twice if we would not do this.
                 }
 
             });
         }
     }
-
-
-    localStorage.setItem("matrix", JSON.stringify(matrix));
+    persistMatrix();
     redrawMatrix();
 }
 
 
 
 
+function getTodo(toDoId) {
+    // Search for Todo newTodos-List
+    let foundTodo;
+
+    //debugger;
+    // Suche in Matrix nach id
+    for (i = 0; i < matrix.length; i++) {
+        foundTodo = matrix[i].todos.find(function (todo) {
+            return todo.id == toDoId;
+        });
+        if (foundTodo) {
+            break;
+        }
+    }
+    return foundTodo;
+
+}
