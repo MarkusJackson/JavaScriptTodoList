@@ -49,7 +49,23 @@ Draw Matrix
 
 function redrawMatrix() {
     console.log("REDRAWING MATRIX: ", matrix);
-    todoColumnsDiv.innerHTML = createColumns(matrix);
+
+    let dateFrom = new Date(dateOfFirstColumnToDisplay.getFullYear(), dateOfFirstColumnToDisplay.getMonth(), dateOfFirstColumnToDisplay.getDate());
+    let dateTill = new Date(dateFrom);
+    dateTill.setDate(dateFrom.getDate() + numberOfTodoColumnsToDisplay - 1);
+    //debugger;
+    let todoColumnsToDraw = matrix.filter(function (todoColumn) {
+        let normalizedTodoColumnDate = new Date(todoColumn.date.getFullYear(), todoColumn.date.getMonth(), todoColumn.date.getDate());
+
+        /*   console.log("dateFrom                : " + dateFrom.getTime() / 100000 + "  -- " + dateFrom.toDateString());
+           console.log("normalizedTodoColumnDate: " + normalizedTodoColumnDate.getTime() / 100000 + "  -- " + normalizedTodoColumnDate.toDateString());
+           console.log("dateTill                : " + dateTill.getTime() / 100000 + "  -- " + dateTill.toDateString());
+           console.log("ff");
+   */
+        return (normalizedTodoColumnDate.getTime() >= dateFrom.getTime() && normalizedTodoColumnDate.getTime() <= dateTill.getTime());
+    });
+
+    todoColumnsDiv.innerHTML = createColumns(todoColumnsToDraw);
     addClickListenerToAddTodoButtons();
 }
 
@@ -141,19 +157,22 @@ function removeTodoFromMatrixByChild(childOfTodo, todoId) {
 
 
 function scrollBack() {
-    console.log("scrollBack");
-    reloadMatrix(matrix2);
+    dateOfFirstColumnToDisplay.setDate(dateOfFirstColumnToDisplay.getDate() - 1);
+    checkDataToDisplay();
+    redrawMatrix();
 }
 
 
 function scrollForward() {
-    console.log("scrollForward");
+    dateOfFirstColumnToDisplay.setDate(dateOfFirstColumnToDisplay.getDate() + 1);
+    checkDataToDisplay();
+    redrawMatrix();
 }
 
 function checkDataToDisplay() {
     for (let i = 0; i < numberOfTodoColumnsToDisplay; i++) {
 
-        let dateToCheckFor = new Date();
+        let dateToCheckFor = new Date(dateOfFirstColumnToDisplay);
         dateToCheckFor.setDate(dateOfFirstColumnToDisplay.getDate() + i);
         let found = false;
         for (let j = 0; j < matrix.length; j++) {
@@ -164,9 +183,13 @@ function checkDataToDisplay() {
             }
         }
         if (!found) {
-            // Create TODO Columns for Date
-            console.log("Creating new Column for: " + dateToCheckFor);
-            matrix.push(new TodoColumn("blupp", dateToCheckFor)); // TODO vielleicht mit der SPlice Methode an richtige Stelle einfügen
+            // Create todoColumn for Date
+            matrix.push(new TodoColumn("blupp", dateToCheckFor)); // TODO mit der SPlice Methode an richtige Stelle einfügen
+
+            matrix.sort(function (a, b) {
+                return a.date.getTime() - b.date.getTime();
+            });
+
             persistMatrix();
         }
 
@@ -176,6 +199,12 @@ function checkDataToDisplay() {
 
 }
 
+let scrollBackButton = document.getElementById("scrollBack");
+scrollBackButton.addEventListener("click", scrollBack);
+
+
+let scrollForwardButton = document.getElementById("scrollForward");
+scrollForwardButton.addEventListener("click", scrollForward);
 
 
 
@@ -185,12 +214,6 @@ function checkDataToDisplay() {
 
 
 */
-let scrollBackButton = document.getElementById("scrollBack");
-scrollBackButton.addEventListener("click", scrollBack);
-
-
-let scrollForwardButton = document.getElementById("scrollForward");
-scrollForwardButton.addEventListener("click", scrollForward);
 
 
 /*
@@ -201,13 +224,12 @@ dateOfFirstColumnToDisplay.setDate(dateOfFirstColumnToDisplay.getDate() - 1);
 localStorage.setItem("matrix_firstDateToDisplay", JSON.stringify(dateOfFirstColumnToDisplay));
 
 let numberOfTodoColumnsToDisplay = 3;
-
 /*
 Initialize Matrix
 */
 let matrix;
-// resetMatrix();
+//resetMatrix();
 loadMatrix();
-checkDataToDisplay(); // Prüfe ob für alle Tage die gezeichnet werden sollen TodoColumns in der Matrix sind
-redrawMatrix(); // TODO die zteichnet gerade noch alles was drinnen ist....hier muss auch auf start und folgetage geachtet werden
+checkDataToDisplay(); // Prüfe ob für alle Tage die gezeichnet werden sollen TodoColumns in der Matrix sind, sonst füge hinzu
+redrawMatrix();
 

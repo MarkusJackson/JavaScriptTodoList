@@ -43,12 +43,10 @@ function dropToDoOnMatrix(ev) {
     console.log(document.getElementById(dropData));
     let todoToDrop = getTodo(dropData);
     if (!todoToDrop) {
-        console.log("Could not find TodoToDrop");
+        console.error("Could not find TodoToDrop");
         debugger;
     }
-    console.log("Found Todo to Drop: " + todoToDrop.id);
-    console.log("Target to Drop I index" + ev.path[1].rowInde);
-    console.log("Target to Drop Y Index:" + [ev.path[0].cellIndex]);
+    console.log("Found Todo to Drop: ", todoToDrop.id);
 
     /*
     Über den Path gehen bis Parent TodoDiv oder TodoListDiv ist
@@ -66,6 +64,13 @@ function dropToDoOnMatrix(ev) {
 
     if (correctParent.className == MATRIX_COLUMN_DIV_CLASS) {
         // Insert at end if parent is Column-Div
+
+        Hier verwende ich das customData atrribut ColumnIndex...das geht nun aber nicht mehr da das was ich sehe nicht mehr der Matrix entspricht.Ich muss über die ID gehen
+
+        erst füge die ID ins culumDiv...falls nicht schon drinnen
+        hole ID aus ColumnDiv
+        itereate über MAtrix bis richtige Column geunfnden und pushe dann dort
+
         matrix[correctParent.getAttribute(HTML_DATA_COLUMN_INDEX)].todos.push(todoToDrop);
     } else {
         // Insert before target todo if parent is todo
