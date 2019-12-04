@@ -1,6 +1,10 @@
 .matrix { 
     background: slateblue; 
     display: flex;
+    position: relative;
+    /*position: fixed;*/
+    /*top: 40px;*/
+    padding: 40px 40px;
 }
 
 todoColumnsDiv { 

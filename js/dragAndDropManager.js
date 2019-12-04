@@ -60,18 +60,11 @@ function dropToDoOnMatrix(ev) {
         return item.className == MATRIX_COLUMN_DIV_CLASS || item.className == MATRIX_TODO_DIV_CLASS;
     });
 
-    removeTodoFromMatrixByChild(ev.srcElement, todoToDrop.id);
+    removeTodoFromMatrixByChild(todoToDrop.id);
 
     if (correctParent.className == MATRIX_COLUMN_DIV_CLASS) {
         // Insert at end if parent is Column-Div
-
-        Hier verwende ich das customData atrribut ColumnIndex...das geht nun aber nicht mehr da das was ich sehe nicht mehr der Matrix entspricht.Ich muss über die ID gehen
-
-        erst füge die ID ins culumDiv...falls nicht schon drinnen
-        hole ID aus ColumnDiv
-        itereate über MAtrix bis richtige Column geunfnden und pushe dann dort
-
-        matrix[correctParent.getAttribute(HTML_DATA_COLUMN_INDEX)].todos.push(todoToDrop);
+        matrix[getTodoColumnIndexById(correctParent.id)].todos.push(todoToDrop);
     } else {
         // Insert before target todo if parent is todo
         //debugger;

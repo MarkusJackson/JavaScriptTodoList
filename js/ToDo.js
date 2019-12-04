@@ -35,7 +35,7 @@ function getTodoDiv(todo) {
             '           <i class="prio fa fa-thermometer-full" aria-hidden="true" job="change_priority"></i>' +
             '       </div>' +
             '       <div class="todo-button-row-button">' +
-            '           <i class="delete fa fa-trash-o" aria-hidden="true" job="delete"></i>' +
+            '           <i class="delete fa fa-trash-o" aria-hidden="true" job="delete" onclick="clickedDeleteTodo(event)"></i>' +
             '       </div>' +
             '       <div class="todo-button-row-button">' +
             '           <i class="done fa fa-check" aria-hidden="true" job="set_done"></i>' +
@@ -46,5 +46,12 @@ function getTodoDiv(todo) {
             '   </div>' +
             '   <textarea id="todoTextArea" cols="40" rows="5" name="todoTextArea" value="">' + todo.title + '</textarea>' +
             '</div>'
+    }
+}
+
+function clickedDeleteTodo(event) {
+    var check = confirm(getTranslatedText('confirm_delete'));
+    if (check == true) {
+        removeTodoFromMatrixByChild(event.path[3].id);
     }
 }

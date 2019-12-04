@@ -82,15 +82,11 @@ function createColumns(matrix) {
 
 function getColumnContent(todoColumn, columnIndex) {
 
-    let output = '<div id="' + MATRIX_COLUMN_DIV_CLASS + columnIndex + '" ' + HTML_DATA_COLUMN_INDEX + '="' + columnIndex + '" class="' + MATRIX_COLUMN_DIV_CLASS + '" '
-        + ' ondrop="dropToDoOnMatrix(event)" ondragover="allowDropOnMatrixCell(event)">';
+    let output = '<div id="' + todoColumn.id + '" class="' + MATRIX_COLUMN_DIV_CLASS + '" '
+        + ' ondrop="dropToDoOnMatrix(event)" ondragover="allowDropOnMatrixCell(event)" onclick="clickedTodoColumn(event), false" >';
     output += '<div class="todoColumnHeaderDiv">' + todoColumn.date.toDateString() + '</div>';
 
-    output += '<div class="addTodoToColumnButton">'
-        + '<input type="text" id="addTodoTextInput' + columnIndex + '" placeholder="Add To Do">'
-        + '<button name="addTodoToColumnButton" ' + HTML_DATA_COLUMN_INDEX + '="' + columnIndex + '" id="addToDoButton" title="Add">Add</button>';
-
-    output += '<div class="todoListDiv">';
+    output += '<div class="' + MATRIX_COLUMN_TODO_LIST_DIV_CLASS + '">';
     todoColumn.todos.forEach(toDo => {
         output += getTodoDiv(toDo);
     });
@@ -103,14 +99,22 @@ function getColumnContent(todoColumn, columnIndex) {
 
 }
 
+function clickedTodoColumn(event) {
+    if (event.path[0].className == MATRIX_COLUMN_DIV_CLASS) {
+        addTodo(event.path[0].id);
+    } else if (event.path[0].className == MATRIX_COLUMN_TODO_LIST_DIV_CLASS) {
+        addTodo(event.path[1].id);
+    }
+}
+
 function addClickListenerToAddTodoButtons() {
     let addToDoToColumnButtons = document.getElementsByName("addTodoToColumnButton");
     //debugger;
     addToDoToColumnButtons.forEach(addToDoButton => {
 
-        let columnIndex = addToDoButton.getAttribute(HTML_DATA_COLUMN_INDEX);
+        let columnID = addToDoButton.id;
         addToDoButton.addEventListener("click", function () {
-            addTodo(columnIndex);
+            addTodo(columnID);
         }, false);
     });
 }
@@ -118,9 +122,8 @@ function addClickListenerToAddTodoButtons() {
 
 
 
-function addTodo(columnIndex) {
-    console.log("Method 'addTodo()' - Adding new TODO - '" + document.getElementById("addTodoTextInput" + columnIndex).value + "' to Column with index" + columnIndex);
-    insertTodoToMatrixData(new ToDo(document.getElementById("addTodoTextInput" + columnIndex).value, Math.random()), columnIndex, -1);
+function addTodo(todoColumnId) {
+    insertTodoToMatrixData(new ToDo("leer", Math.random()), getTodoColumnIndexById(todoColumnId), -1);
 }
 
 function insertTodoToMatrixData(todo, columnIndex, position) {
@@ -132,20 +135,20 @@ function insertTodoToMatrixData(todo, columnIndex, position) {
     }
 
     persistMatrix();
-
     redrawMatrix();
 }
 
-function removeTodoFromMatrixByChild(childOfTodo, todoId) {
-    while (true) {
-        if (childOfTodo.className == MATRIX_COLUMN_DIV_CLASS) {
-            break;
-        } else {
-            childOfTodo = childOfTodo.parentElement;
+function getTodoColumnIndexById(todoColumnId) {
+
+    for (let index = 0; index < matrix.length; index++) {
+        const todoColumn = matrix[index];
+        if (todoColumn.id == todoColumnId) {
+            return index;
         }
     }
+}
 
-    //debugger;
+function removeTodoFromMatrixByChild(todoId) {
     for (i = 0; i < matrix.length; i++) {
 
         let filteredTodos = matrix[i].todos.filter(function (todo) {
@@ -153,6 +156,8 @@ function removeTodoFromMatrixByChild(childOfTodo, todoId) {
         });
         matrix[i].todos = filteredTodos;
     }
+    persistMatrix();
+    redrawMatrix();
 }
 
 
@@ -209,21 +214,47 @@ scrollForwardButton.addEventListener("click", scrollForward);
 
 
 /*
-
+ 
 ################ Control Flow ################
-
-
+ 
+ 
 */
 
 
 /*
 Initialize Config
 */
-let dateOfFirstColumnToDisplay = new Date();
-dateOfFirstColumnToDisplay.setDate(dateOfFirstColumnToDisplay.getDate() - 1);
-localStorage.setItem("matrix_firstDateToDisplay", JSON.stringify(dateOfFirstColumnToDisplay));
 
-let numberOfTodoColumnsToDisplay = 3;
+// Date to Display from
+let dateOfFirstColumnToDisplay;
+let unparsedDateOfFirstColumnToDisplay = localStorage.getItem("matrix_firstDateToDisplay")
+if (unparsedDateOfFirstColumnToDisplay) {
+    dateOfFirstColumnToDisplay = parseDateStringToDate(unparsedDateOfFirstColumnToDisplay);
+} else {
+    dateOfFirstColumnToDisplay = new Date();
+    dateOfFirstColumnToDisplay.setDate(dateOfFirstColumnToDisplay.getDate() - 1);
+    localStorage.setItem("matrix_firstDateToDisplay", JSON.stringify(dateOfFirstColumnToDisplay));
+}
+
+
+// Number of Columns to display
+let numberOfTodoColumnsToDisplay = localStorage.getItem("numberOfTodoColumnsToDisplay")
+if (!numberOfTodoColumnsToDisplay) {
+    numberOfTodoColumnsToDisplay = 3;
+    localStorage.setItem("numberOfTodoColumnsToDisplay", numberOfTodoColumnsToDisplay);
+}
+
+
+// Language
+let selectedLanguage = localStorage.getItem("language")
+if (!selectedLanguage) {
+    selectedLanguage = "de";
+}
+setSelectedLanguage(selectedLanguage);
+
+
+
+
 /*
 Initialize Matrix
 */
