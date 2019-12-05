@@ -7,28 +7,14 @@
     padding: 40px 40px;
 }
 
-todoColumnsDiv { 
-    background: black; 
-    
-    
-    
-}
-
 
 .todoColumnDiv { 
     background-color: green; 
-    min-width: 250px;
-    max-width: 350px;
     float: left; /* Dadurch sind die Columns nebeneinander */
     height: 100vh;
-    
-    
-    
+    width: fit-content;
     margin: 0px 10px; /* oben seitlich */
-    width: 15%; 
 }
 
 
 
-.backbutton { float: left; width: 45px; background: pink; }
-.forwardbutton { float: left; width: 50px; background: pink; }

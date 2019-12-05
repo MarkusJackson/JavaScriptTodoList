@@ -1,3 +1,8 @@
+
+$("#button-toggle-config").click(function () {
+    $(".icon").toggleClass("close");
+});
+
 let toogleNavStatus = false;
 
 let toggleNav = function () {

@@ -49,11 +49,10 @@ Draw Matrix
 
 function redrawMatrix() {
     console.log("REDRAWING MATRIX: ", matrix);
-
+    debugger;
     let dateFrom = new Date(dateOfFirstColumnToDisplay.getFullYear(), dateOfFirstColumnToDisplay.getMonth(), dateOfFirstColumnToDisplay.getDate());
     let dateTill = new Date(dateFrom);
     dateTill.setDate(dateFrom.getDate() + numberOfTodoColumnsToDisplay - 1);
-    //debugger;
     let todoColumnsToDraw = matrix.filter(function (todoColumn) {
         let normalizedTodoColumnDate = new Date(todoColumn.date.getFullYear(), todoColumn.date.getMonth(), todoColumn.date.getDate());
 
@@ -238,9 +237,9 @@ if (unparsedDateOfFirstColumnToDisplay) {
 
 
 // Number of Columns to display
-let numberOfTodoColumnsToDisplay = localStorage.getItem("numberOfTodoColumnsToDisplay")
+let numberOfTodoColumnsToDisplay = parseInt(localStorage.getItem("numberOfTodoColumnsToDisplay"));
 if (!numberOfTodoColumnsToDisplay) {
-    numberOfTodoColumnsToDisplay = 3;
+    numberOfTodoColumnsToDisplay = 5;
     localStorage.setItem("numberOfTodoColumnsToDisplay", numberOfTodoColumnsToDisplay);
 }
 
