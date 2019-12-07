@@ -49,7 +49,6 @@ Draw Matrix
 
 function redrawMatrix() {
     console.log("REDRAWING MATRIX: ", matrix);
-    debugger;
     let dateFrom = new Date(dateOfFirstColumnToDisplay.getFullYear(), dateOfFirstColumnToDisplay.getMonth(), dateOfFirstColumnToDisplay.getDate());
     let dateTill = new Date(dateFrom);
     dateTill.setDate(dateFrom.getDate() + numberOfTodoColumnsToDisplay - 1);
@@ -63,8 +62,7 @@ function redrawMatrix() {
    */
         return (normalizedTodoColumnDate.getTime() >= dateFrom.getTime() && normalizedTodoColumnDate.getTime() <= dateTill.getTime());
     });
-
-    todoColumnsDiv.innerHTML = createColumns(todoColumnsToDraw);
+    matrixdiv.innerHTML = createColumns(todoColumnsToDraw);
     addClickListenerToAddTodoButtons();
 }
 
@@ -83,7 +81,7 @@ function getColumnContent(todoColumn, columnIndex) {
 
     let output = '<div id="' + todoColumn.id + '" class="' + MATRIX_COLUMN_DIV_CLASS + '" '
         + ' ondrop="dropToDoOnMatrix(event)" ondragover="allowDropOnMatrixCell(event)" onclick="clickedTodoColumn(event), false" >';
-    output += '<div class="todoColumnHeaderDiv">' + todoColumn.date.toDateString() + '</div>';
+    output += '<div class="todoColumnHeaderDiv">' + getTodoColumnHeader(todoColumn) + '</div>';
 
     output += '<div class="' + MATRIX_COLUMN_TODO_LIST_DIV_CLASS + '">';
     todoColumn.todos.forEach(toDo => {
@@ -120,10 +118,6 @@ function addClickListenerToAddTodoButtons() {
 
 
 
-
-function addTodo(todoColumnId) {
-    insertTodoToMatrixData(new ToDo("leer", Math.random()), getTodoColumnIndexById(todoColumnId), -1);
-}
 
 function insertTodoToMatrixData(todo, columnIndex, position) {
     let column = matrix[columnIndex];
@@ -239,9 +233,11 @@ if (unparsedDateOfFirstColumnToDisplay) {
 // Number of Columns to display
 let numberOfTodoColumnsToDisplay = parseInt(localStorage.getItem("numberOfTodoColumnsToDisplay"));
 if (!numberOfTodoColumnsToDisplay) {
-    numberOfTodoColumnsToDisplay = 5;
+    numberOfTodoColumnsToDisplay = 7;
     localStorage.setItem("numberOfTodoColumnsToDisplay", numberOfTodoColumnsToDisplay);
 }
+
+
 
 
 // Language
@@ -258,8 +254,13 @@ setSelectedLanguage(selectedLanguage);
 Initialize Matrix
 */
 let matrix;
+//resetDatabase();
+//localStorage.removeItem("holidays");
 //resetMatrix();
 loadMatrix();
-checkDataToDisplay(); // Prüfe ob für alle Tage die gezeichnet werden sollen TodoColumns in der Matrix sind, sonst füge hinzu
-redrawMatrix();
 
+
+checkDataToDisplay(); // Prüfe ob für alle Tage die gezeichnet werden sollen TodoColumns in der Matrix sind, sonst füge hinzu
+redrawMatrix(); // Dies hier immer am Ende durchführen, da z.B. das Feiertage-laden erst fertig sein muss.
+
+printDatabase();

@@ -1,21 +1,19 @@
 
 .todoDiv{
-  width: 180px;
   height:90px;
-  min-height: 45px;
-  background-image: url('../img/bg2.jpg');
-  background-size: 100% 200%;
-  background-repeat: no-repeat;
+  background-color: green;
   border-radius: 15px;
-  position: relative;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  padding: 0;
-  margin: 0;
+  border: thick solid black;
+  padding: 5px;
+  margin: 5px;
 }
 
+.todo-button-row{
+  display: flex;
+  align-items:flex-end;
+}
 
 .todoDiv i.edit{
-  position: absolute;
   font-size: 20px;
   padding-left:2px;
   left:5px;
@@ -23,7 +21,6 @@
 }
 
 .todoDiv i.prio{
-  position: absolute;
   font-size: 20px;
   padding-left:10px;
   left:25px;
@@ -31,7 +28,6 @@
 }
 
 .todoDiv i.delete{
-  position: absolute;
   font-size: 20px;
   padding-left:10px;
   left:45px;
@@ -39,7 +35,6 @@
 }
 
 .todoDiv i.done{
-  position: absolute;
   font-size: 20px;
   padding-left:10px;
   left:65px;
@@ -47,7 +42,6 @@
 }
 
 .todoDiv i.undone{
-  position: absolute;
   font-size: 20px;
   padding-left:10px;
   left:85px;
@@ -75,17 +69,21 @@
   cursor: pointer;
 }
 
+
+
+.todo-preview-content { 
+  display: flex;
+  align-items:flex-left;
+  flex-grow: 1;
+  padding: 8px;
+}
+
+
 .todoDiv textarea{
-  position: absolute;
-  width:165px; 
-  height: 40px;
+  flex-grow: 1;
   padding:0;
-  margin:0;
   /* font-size: 10px; */
-  left:5px;
-  top:40px;
   background-color: #FFF;
-  max-width:285px;
 }
 
 

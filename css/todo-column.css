@@ -1,0 +1,48 @@
+.todoColumnDiv { 
+  background-color:  lightskyblue; 
+  display: flex;
+  flex-direction: column;
+  flex-grow:1;
+  height: calc(100vh - 40px);
+  margin: 0px 8px 0px 8px; /* oben seitlich */
+  color:black;
+}
+
+.todoColumnHeaderDiv{
+  display: flex;
+  flex-direction: column;
+}
+
+.todoColumnHeaderDiv .todo-column-header-first-row{
+  display: flex;
+  flex-direction: row;
+}
+
+
+.todoColumnHeaderDiv .date{
+  flex-grow: 1;
+  padding:0;
+  font-size: 18px; 
+  font-style: italic;
+  font-weight: bold;
+  background-color: #FFF;
+}
+
+.todoColumnHeaderDiv .todo-column-header-second-row{
+  display: flex;
+}
+
+
+.todoColumnHeaderDiv .holidayblock{
+  flex-grow: 1;
+  padding:0;
+  font-size: 12px; 
+  background-color: #FFF;
+}
+
+.todoColumnHeaderDiv .holidayblock{
+  flex-grow: 1;
+  padding:0;
+  font-size: 12px; 
+  background-color: #FFF;
+}

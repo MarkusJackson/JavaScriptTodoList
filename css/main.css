@@ -3,11 +3,25 @@
     height: 40px;
     position: fixed;
     top: 0;
-    background-color : khaki;
+    background-color : lightskyblue;
     display: flex;
-    flex-wrap: wrap; /* was macht das ? */
+    flex-wrap: wrap; 
     z-index: 1000; /* Hat wohl was damit zu tun, dass immer im Vorderung ... Ebenen?? */
   }
 
 .backbutton { float: left; width: 45px; background: pink; }
 .forwardbutton { float: left; width: 50px; background: pink; }
+
+.content {
+    background-color: pink;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    
+
+    align-items:flex-end;
+    margin-top:40px;
+  }

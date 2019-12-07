@@ -1,0 +1,17 @@
+.matrix { 
+    display: flex;
+    align-items:flex-end;
+    flex-grow: 1;
+
+    background: red; 
+    margin-left:30px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 16px;
+}
+
+
+
+
+.backbutton { float: left; width: 45px; background: pink; }
+.forwardbutton { float: left; width: 50px; background: pink; }
